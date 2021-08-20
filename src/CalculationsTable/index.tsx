@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { useCalcHistory } from "../context";
 import {
   StyledTable,
@@ -8,6 +8,9 @@ import {
   HeadRow,
 } from "./CalculationsTable.styled";
 import CalculationValueRow from "./CalculationValueRow";
+import { ReactComponent as QuestionIcon } from "../assets/question-icon.svg";
+import { css } from "@emotion/react";
+/** @jsxImportSource @emotion/react */
 
 /**
  * Calculation history table
@@ -27,7 +30,26 @@ const CalculationsTable = () => {
           <HeadCell>Sum</HeadCell>
           <HeadCell>Div</HeadCell>
           <HeadCell>Rem</HeadCell>
-          <HeadCell>HPN</HeadCell>
+          <HeadCell>
+            <div
+              css={css`
+                position: relative;
+              `}
+            >
+              HPN
+              <QuestionIcon
+                css={css`
+                  position: absolute;
+                  top: -2px;
+                  margin-left: 1px;
+
+                  & > path {
+                    fill: #373737;
+                  }
+                `}
+              />
+            </div>
+          </HeadCell>
         </HeadRow>
       </Head>
       <Body
