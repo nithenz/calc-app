@@ -2,7 +2,6 @@ import { useCallback } from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import { createContext, FC } from "react";
-import { getLargestPrimeNubmerBetween } from "../math";
 const worker = require("workerize-loader!../math/calc.worker.ts"); // eslint-disable-line import/no-webpack-loader-syntax
 
 // Web Worker instnace
