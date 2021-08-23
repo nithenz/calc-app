@@ -16,7 +16,7 @@ const InputsPanel: FC = () => {
   const [firstOperand, setFirstOperand] = useState("");
   const [secondOperand, setSecondOperand] = useState("");
 
-  console.log(history);
+  console.log(history, "history");
 
   // Handles 1st operand input changes
   const handleFirstOperandInputChange = useCallback<
@@ -33,13 +33,13 @@ const InputsPanel: FC = () => {
   }, []);
 
   // Handles calc click
-  const handleCalcClick = useCallback(() => {
+  const handleCalcClick = useCallback(async () => {
     const a = parseInt(firstOperand);
     const b = parseInt(secondOperand);
     if (a && b) {
-      calc(a, b);
       setFirstOperand("");
       setSecondOperand("");
+      await calc(a, b);
     }
   }, [firstOperand, secondOperand, calc]);
 

@@ -3,7 +3,14 @@ import { useContext } from "react";
 import { useState } from "react";
 import { createContext, FC } from "react";
 import { getLargestPrimeNubmerBetween } from "../math";
+const worker = require("workerize-loader!../math/worker"); // eslint-disable-line import/no-webpack-loader-syntax
 
+// Web Worker instnace
+// const workerInstance = worker();
+
+/**
+ * Calculation type
+ */
 export interface Calculation {
   operands: {
     first: number;
@@ -18,50 +25,57 @@ export interface Calculation {
   date: number;
 }
 
+/**
+ * Calculate function options
+ */
 export interface CalcOptions {
   appendToHistory?: boolean;
 }
 
+/**
+ * Calculation history context interface
+ */
 export interface CalcContextInterface {
   history: Calculation[];
-  calc: (a: number, b: number, options?: CalcOptions) => Calculation;
+  calc: (a: number, b: number, options?: CalcOptions) => Promise<Calculation>;
 }
 
+/**
+ * Calculation history context instance object
+ */
 export const CalcContext = createContext<CalcContextInterface>({} as any);
 
 export const CalcContextProvider: FC = ({ children }) => {
   const [calculations, setCalculations] = useState<Calculation[]>([]);
 
   const calc = useCallback<CalcContextInterface["calc"]>(
-    (a, b, { appendToHistory } = { appendToHistory: true }) => {
+    async (a, b, { appendToHistory } = { appendToHistory: true }) => {
       const start = a < b ? a : b;
       const end = a < b ? b : a;
 
-      const calculationItem: Calculation = {
-        date: Date.now(),
-        division: a / b,
-        sum: a + b,
-        remainder: a % b,
-        operands: {
-          first: a,
-          second: b,
-        },
-        hpn: getLargestPrimeNubmerBetween(
-          start < 0 ? 0 : start,
-          end < 0 ? 0 : end
-        ),
-      };
+      return new Promise<Calculation>((resolve) => {
+        const workerInstance = worker();
+        workerInstance.addEventListener("message", (message: any) => {
+          console.log("message", message);
 
-      if (appendToHistory) {
-        setCalculations((prevCalculations) => [
-          ...prevCalculations,
-          calculationItem,
-        ]);
-      }
+          if (!message.data.result) {
+            return
+          }
 
-      return calculationItem;
+          const calculation = { ...message.data.result, date: Date.now() };
+          if (appendToHistory) {
+            setCalculations((prevCalculations) => [
+              ...prevCalculations,
+              calculation,
+            ]);
+          }
+          return resolve(calculation);
+        });
+
+        workerInstance.calculate(start < 0 ? 0 : start, end < 0 ? 0 : end);
+      });
     },
-    []
+    [worker]
   );
 
   return (
@@ -71,6 +85,9 @@ export const CalcContextProvider: FC = ({ children }) => {
   );
 };
 
+/**
+ * To use calculation history hook
+ */
 export function useCalcHistory() {
   return useContext(CalcContext);
 }

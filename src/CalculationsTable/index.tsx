@@ -12,6 +12,7 @@ import { ReactComponent as QuestionIcon } from "../assets/question-icon.svg";
 import { css } from "@emotion/react";
 /** @jsxImportSource @emotion/react */
 
+
 /**
  * Calculation history table
  * @returns Calctulation history table component
