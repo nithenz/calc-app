@@ -9,6 +9,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@types/enzyme": "^3.10.9",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
@@ -43,5 +44,20 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
+    "enzyme": "^3.11.0",
+    "identity-obj-proxy": "^3.0.0"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "workerize-loader(\\?.*)?!(.*)": "identity-obj-proxy"
+    },
+    "transform": {
+      "workerize-loader(\\?.*)?!(.*)": "<rootDir>/workerize-jest.js",
+      "^.+\\.[jt]sx?$": "babel-jest",
+      "^.+\\.[jt]s?$": "babel-jest"
+    }
   }
 }

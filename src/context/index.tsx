@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useState } from "react";
 import { createContext, FC } from "react";
 import { getLargestPrimeNubmerBetween } from "../math";
-const worker = require("workerize-loader!../math/worker"); // eslint-disable-line import/no-webpack-loader-syntax
+const worker = require("workerize-loader!../math/calc.worker.ts"); // eslint-disable-line import/no-webpack-loader-syntax
 
 // Web Worker instnace
 // const workerInstance = worker();
@@ -53,8 +53,9 @@ export const CalcContextProvider: FC = ({ children }) => {
       const start = a < b ? a : b;
       const end = a < b ? b : a;
 
-      return new Promise<Calculation>((resolve) => {
+      return new Promise<Calculation>(async (resolve) => {
         const workerInstance = worker();
+        await workerInstance.ready;
         workerInstance.addEventListener("message", (message: any) => {
           console.log("message", message);
 
@@ -69,6 +70,7 @@ export const CalcContextProvider: FC = ({ children }) => {
               calculation,
             ]);
           }
+          workerInstance.terminate();
           return resolve(calculation);
         });
 
