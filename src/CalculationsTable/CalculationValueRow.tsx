@@ -6,6 +6,7 @@ import {
   Row,
   ValueCell,
   OperandsDelimitierBorder,
+  OperandValue,
 } from "./CalculationsTable.styled";
 
 /**
@@ -28,9 +29,9 @@ const CalculationsValueRow: FC<CalculationsValueRowProps> = ({
     <Row key={date}>
       <Cell>
         <OperandsCell>
-          <div>{operands.first}</div>
+          <OperandValue>{operands.first}</OperandValue>
           <OperandsDelimitierBorder />
-          <div>{operands.second}</div>
+          <OperandValue>{operands.second}</OperandValue>
         </OperandsCell>
       </Cell>
       <ValueCell>{sum}</ValueCell>

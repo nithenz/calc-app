@@ -36,7 +36,6 @@ test("Table with 3 calculations in history", () => {
   const uniqueMockHistoryValue = mockHistoryValue.map((item, index) => ({...item,date:index}))
 
   const Table = () => {
-    // console.log(mockHistoryValue)
     return (
       <CalcContext.CalcContext.Provider
         value={{ history: uniqueMockHistoryValue, calc: jest.fn() }}

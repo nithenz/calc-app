@@ -14,7 +14,9 @@ const Input: FC<InputProps> = (props) => {
 export default Input;
 
 const StyledInput = styled.input`
-  border: 2px solid #e5e5e5;
+  border: 2px solid ${(props) => props.theme.borderGray};
+  background-color: ${(props) => props.theme.wb};
+  color: ${(props) => props.theme.bw};
   border-radius: 4px;
   outline: none;
   box-shadow: none;

@@ -17,5 +17,5 @@
     "jsx": "react-jsx",
     "jsxImportSource": "@emotion/react"
   },
-  "include": ["src", "workerize-jest.js"]
+  "include": ["src", "workerize-jest.js", "src/emotion.d.ts"]
 }

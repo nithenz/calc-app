@@ -28,7 +28,7 @@ export const Body = styled.tbody`
  * Table's head row
  */
 export const HeadRow = styled.tr<{ appendPadding: number }>`
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid ${(props) => props.theme.borderGray};
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
   padding-right: ${(props) => props.appendPadding}px;
@@ -38,7 +38,7 @@ export const HeadRow = styled.tr<{ appendPadding: number }>`
  * Table's base row component
  */
 export const Row = styled.tr`
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid ${(props) => props.theme.borderGray};
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
 `;
@@ -52,7 +52,7 @@ export const Cell = styled.td`
   height: 40px;
   line-height: 40px;
   padding: 2px;
-  border-right: 1px solid #e5e5e5;
+  border-right: 1px solid ${(props) => props.theme.borderGray};
   &:last-child {
     border-right: none;
   }
@@ -69,12 +69,12 @@ export const ValueCell = styled(Cell)`
  * Table's head cell
  */
 export const HeadCell = styled.th`
-  color: #373737;
+  color: ${(props) => (props.theme.dark ? "#777777" : "#373737")};
   font-size: 14px;
   font-weight: 500;
   line-height: 21px;
   padding: 15px 0;
-  border-right: 1px solid #e5e5e5;
+  border-right: 1px solid ${(props) => props.theme.borderGray};
   &:last-child {
     border-right: none;
   }
@@ -96,6 +96,10 @@ export const OperandsCell = styled.div`
 export const OperandsDelimitierBorder = styled.div`
   width: 1px;
   height: 16px;
-  background-color: #e5e5e5;
+  background-color: ${(props) => props.theme.borderGray};
   box-shadow: 0 2px 3px rgb(0 0 0 / 5%);
+`;
+
+export const OperandValue = styled.span`
+  color: ${(props) => props.theme.bw};
 `;

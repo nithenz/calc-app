@@ -9,7 +9,7 @@ import {
 } from "./CalculationsTable.styled";
 import CalculationValueRow from "./CalculationValueRow";
 import { ReactComponent as QuestionIcon } from "../assets/question-icon.svg";
-import { css } from "@emotion/react";
+import { css, useTheme } from "@emotion/react";
 /** @jsxImportSource @emotion/react */
 
 /**
@@ -18,6 +18,7 @@ import { css } from "@emotion/react";
  */
 const CalculationsTable = () => {
   const { history } = useCalcHistory();
+  const theme = useTheme();
 
   // Scroll bar overflow padding in pxs
   const [overflow, setOverflow] = useState(0);
@@ -44,7 +45,7 @@ const CalculationsTable = () => {
                   margin-left: 1px;
 
                   & > path {
-                    fill: #373737;
+                    fill: ${theme.dark ? "#777777" : "#373737"};
                   }
                 `}
               />
